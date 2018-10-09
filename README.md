@@ -38,7 +38,7 @@ This option instructs Jenkins to obtain your Pipeline from Source Control Manage
 
 7. From the SCM field, choose **Git.**
 
-In the Repository URL field, specify the directory path of your locally cloned repository above, which is from your user account/home directory on your host machine, mapped to the /home directory of the Jenkins container - i.e.
+    In the Repository URL field, specify the directory path of your locally cloned repository above, which is from your user account/home directory on your host machine, mapped to the /home directory of the Jenkins container - i.e.
 
 8. For example "/Users/rfeggins@us.ibm.com/projects-oct-2018/simple-java-maven-app"
 
