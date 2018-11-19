@@ -45,6 +45,11 @@ pipeline {
 
         stage('Update Jira Stage'){
            steps {
+             script {
+
+             } // End script
+           } // End Steps
+         } // End Update Jira Stage
              echo "Update Jira "
 
             script {
@@ -67,5 +72,5 @@ pipeline {
             }
         }
       }
-    }
-}
+    } // End Stages
+} // End Pipeline
