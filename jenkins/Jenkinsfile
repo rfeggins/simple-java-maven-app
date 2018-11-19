@@ -38,26 +38,27 @@ pipeline {
         }
 
         stage('Update Jira Stage'){
-                steps {
-                    echo "Update Jira "
+           steps {
+             echo "Update Jira "
 
-                    script {
+            script {
 
-                      def issue = jiraGetIssue idOrKey: 'env.ddtlID'
-                      echo issue.data.toString()
+              def issue = jiraGetIssue idOrKey: 'env.ddtlID'
+              echo issue.data.toString()
 
-                     try {
-                         def comment = "${BUILD_URL} FAILED - ${ERROR}"
-                         jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
-                         currentBuild.result = 'FAILURE'
+              try {
+                  def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                  jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
+                  currentBuild.result = 'FAILURE'
 
-                         def transitionInput = [ transition: [ name: $buildSuccessTransition ] ]
-                         jiraTransitionIssue idOrKey: $ddtlIDs, input: transitionInput, site: $jiraSite
+                  def transitionInput = [ transition: [ name: $buildSuccessTransition ] ]
+                  jiraTransitionIssue idOrKey: $ddtlIDs, input: transitionInput, site: $jiraSite
 
-                     } catch (error) {
+             } catch (error) {
                         def comment = "${BUILD_URL} FAILED - ${ERROR}"
                         jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
                         currentBuild.result = 'FAILURE'
-                     }
+            }
+        }
     }
 }
