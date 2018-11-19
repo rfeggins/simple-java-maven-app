@@ -1,8 +1,21 @@
 pipeline {
     agent any
 
-    }
+    environment {
+      Integer buildSuccessTransition = 5
+      Integer buildFailTransition = 1
+      jiraSite = "Hertz-Jira"
+      ddtl_ID =  "ddtl-5304"
+      jiraComment = "No Comment"
+      gitCommitMsg = "No Message"
+    }  // End of Environment block
+
     stages {
+        stage ("Validate Jira") {
+
+
+        } // End of Validate Jira stage
+
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
@@ -18,10 +31,33 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
+        stage('Deploy to Dev') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
             }
         }
+
+        stage('Update Jira Stage'){
+                steps {
+                    echo "Update Jira "
+
+                    script {
+
+                      def issue = jiraGetIssue idOrKey: 'env.ddtlID'
+                      echo issue.data.toString()
+
+                     try {
+                         def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                         jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
+                         currentBuild.result = 'FAILURE'
+
+                         def transitionInput = [ transition: [ name: $buildSuccessTransition ] ]
+                         jiraTransitionIssue idOrKey: $ddtlIDs, input: transitionInput, site: $jiraSite
+
+                     } catch (error) {
+                        def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                        jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
+                        currentBuild.result = 'FAILURE'
+                     }
     }
 }
