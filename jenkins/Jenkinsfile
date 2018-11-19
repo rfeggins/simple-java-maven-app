@@ -18,10 +18,8 @@ pipeline {
           script {
              echo "DDTL IDs is"
              echo ddtl_ID
-             
+
           }
-
-
         } // End of Validate Jira stage
 
         stage('Build') {
@@ -68,5 +66,6 @@ pipeline {
                   currentBuild.result = 'FAILURE'
             }
         }
+      }
     }
 }
