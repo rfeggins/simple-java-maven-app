@@ -12,6 +12,14 @@ pipeline {
 
     stages {
         stage ("Validate Jira") {
+          echo ddtl_ID
+          echo $ddtl_ID
+
+          script {
+             echo "DDTL IDs is"
+             echo ddtl_ID
+             
+          }
 
 
         } // End of Validate Jira stage
@@ -55,9 +63,9 @@ pipeline {
                   jiraTransitionIssue idOrKey: $ddtlIDs, input: transitionInput, site: $jiraSite
 
              } catch (error) {
-                        def comment = "${BUILD_URL} FAILED - ${ERROR}"
-                        jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
-                        currentBuild.result = 'FAILURE'
+                  def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                  jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
+                  currentBuild.result = 'FAILURE'
             }
         }
     }
