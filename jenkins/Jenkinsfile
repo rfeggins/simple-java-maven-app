@@ -49,7 +49,6 @@ pipeline {
               try {
                    issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
-
                    if ( issue.data.toString() == "" ) {
                          echo "The following Jira Issues are not found in" jiraSite ddtl_ID
                          echo "ERROR  message Error 130"
@@ -59,6 +58,12 @@ pipeline {
                          exit 130
                    } else {
                      echo issue.data.toString()
+                     sh """
+
+                     echo dev_complete
+
+                     """
+
                    }
 
               } catch (ERROR) {
@@ -84,13 +89,13 @@ pipeline {
                   def error_msg
 
                   try {
-                          jiraAddComment idOrKey: ddtl_ID, comment: comment, site: jiraSite
+                          jiraAddComment idOrKey: ddtl_ID, comment: jiraComment, site: jiraSite
                           def transitionInput = [ transition: [ name: buildSuccessTransition ] ]
                           jiraTransitionIssue idOrKey: ddtl_ID, input: transitionInput, site: jiraSite
 
                      } catch (error) {
                           error_msg = "${BUILD_URL} FAILED"
-                          jiraAddComment idOrKey: ddtl_ID, comment: comment, site: jiraSite
+                          jiraAddComment idOrKey: ddtl_ID, comment: error_msg, site: jiraSite
                           currentBuild.result = 'FAILURE'
                           exit 140
                     }
