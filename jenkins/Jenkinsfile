@@ -50,17 +50,18 @@ pipeline {
                    issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
                    if ( issue.data.toString() == "" ) {
-                         echo "The following Jira Issues are not found in" jiraSite ddtl_ID
-                         echo "ERROR  message Error 130"
+
+                         error_msg = "[FAILURE - 120] jiraGetIssue api call failed sh exit ${result}"
                          echo "##########################"
-                         comment = "${BUILD_URL} FAILED"
+                         echo error_msg
+
                          currentBuild.result = 'FAILURE'
-                         exit 130
+                         sh "exit ${error_msg}"
                    } else {
                      echo issue.data.toString()
                      sh """
-
-                     echo ${dev_complete}
+                       echo "Searching for jira issue"
+                       echo ${dev_complete}
 
                      """
 
