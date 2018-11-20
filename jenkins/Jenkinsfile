@@ -38,7 +38,7 @@ pipeline {
                  echo comment
 
                  currentBuild.result = 'FAILURE'
-                 exit 120
+                 sh "exit ${error_msg}"
 
                } else {
                  echo "Following DDTL IDs retrieved from git commit message"
@@ -60,19 +60,19 @@ pipeline {
                      echo issue.data.toString()
                      sh """
 
-                     echo dev_complete
+                     echo ${dev_complete}
 
                      """
 
                    }
 
-              } catch (ERROR) {
+              } finally {
+                   echo '[FAILURE - 130] Failed to build '
                    echo "The following Jira Issues are not found in" jiraSite ddtl_ID
                    echo "ERROR  message Error 130"
                    echo "##########################"
                    comment = "${BUILD_URL} FAILED"
                    currentBuild.result = 'FAILURE'
-                   exit 130
               }  // End of Try block
             }  // End of script block
         }} // End of Validate Jira stage and Step
@@ -93,11 +93,11 @@ pipeline {
                           def transitionInput = [ transition: [ name: buildSuccessTransition ] ]
                           jiraTransitionIssue idOrKey: ddtl_ID, input: transitionInput, site: jiraSite
 
-                     } catch (error) {
-                          error_msg = "${BUILD_URL} FAILED"
+                     } finally {
+                          error_msg = "FAILURE ERROR 140 - ${BUILD_URL} FAILED"
                           jiraAddComment idOrKey: ddtl_ID, comment: error_msg, site: jiraSite
                           currentBuild.result = 'FAILURE'
-                          exit 140
+
                     }
 
                 }
