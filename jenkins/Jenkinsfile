@@ -132,10 +132,10 @@ pipeline {
            steps {
              echo "Deploy to QA"
              script {
-               def error_msg
-               def qa_transition = jiraGetIssueTransitions = idOrKey: ddtl_ID , site: jiraSite
+               def qa_transition = jiraGetIssueTransitions idOrKey: ddtl_ID, site: jiraSite
                echo qa_transition.data.toString()
-             }}}
+             }
+        }}
 }}
              /*
 
