@@ -40,7 +40,7 @@ pipeline {
                          echo "The following Jira Issues are not found in" jiraSite ddtl_ID
                          echo "ERROR  message Error 130"
                          echo "##########################"
-                         def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                         comment = "${BUILD_URL} FAILED - ${ERROR}"
                          currentBuild.result = 'FAILURE'
                          exit 130
                    } else {
@@ -51,7 +51,7 @@ pipeline {
                    echo "The following Jira Issues are not found in" jiraSite ddtl_ID
                    echo "ERROR  message Error 130"
                    echo "##########################"
-                   def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                   comment = "${BUILD_URL} FAILED - ${ERROR}"
                    currentBuild.result = 'FAILURE'
                    exit 130
               }  // End of Try block
