@@ -33,7 +33,7 @@ pipeline {
                script {
                  // retrieving jira issue
                  try {
-                   def issue = jiraGetIssue idOrKey: 'ddtl_ID' site: jiraSite
+                   def issue = jiraGetIssue idOrKey: ddtl_ID site: 'Hertz-Jira'
                    echo issue.data.toString()
 
                  } catch (ERROR) {
