@@ -21,7 +21,9 @@ pipeline {
 
           }
         } // End of Validate Jira stage
+}
 
+/*
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
@@ -73,3 +75,4 @@ pipeline {
         }
     } // End Stages
 } // End Pipeline
+*/
