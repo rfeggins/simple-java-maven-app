@@ -130,10 +130,30 @@ pipeline {
 
         stage('Transition to QA') {
            steps {
+             echo "Deploy to QA"
+             sh 'ls -l'
              script {
-               echo "Update Jira Stage"
+               def error_msg
+               def qa_transition = jiraGetIssueTransitions = idOrKey: ddtl_ID , site: jiraSite
+               echo qa_transition.data.toString()
+               
+               jiraCommet = "Jenkins Automation\n" + "\nBuild Number " + env.BUILD_NUMBER + "\nBuild URL " + env.BUILD_URL + "\nJOB NAME " + env.JOB_NAME + "\nJOB URL " + env.JOB_URL
 
-             } // End script
+               jiraComment = jiraComment + "Deployment Successful - Transitioning Jira Issue to  " + gitCommitMsg + "new State " + ready_to_deploy
+
+                 Integer deployed_to_qa = 101
+                 echo "##############################################################################"
+                 def transitionInput = [ transition: [ id: deployed_to_qa ] ]
+                 try {
+                   def trans_issue = jiraTransitionIssue idOrKey: ddtl_ID , input: transitionInput, site: jiraSite
+                   echo "transiton response " + trans_issue.data.toString()
+
+                 } catch (err) {
+                    error "Exception"
+                    jiraAddComment idOrKey: ddtl_ID , site: jiraSite, comment: "${BUILD_URL} ERROR WHILE RELEASING ${error}"
+                   currentBuild.result = 'FAILURE'
+                 }
+             }
            }} // End Step // End Update Jira Stage
 
     } // End Stages
