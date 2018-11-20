@@ -11,7 +11,7 @@ pipeline {
     }  // End of Environment block
 
     stages {
-        stage ("Validate Jira") {
+        stage ('Validate Jira') {
           echo ddtl_ID
           echo $ddtl_ID
 
