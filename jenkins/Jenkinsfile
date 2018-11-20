@@ -66,7 +66,15 @@ pipeline {
                      def issue_info = issue.data.toString()
 
                      sh """
+                     echo "################################"
                        echo "Searching for jira issue"
+
+                       if [ grep -i -o ${dev_complete} ${issue_info} ]
+                       then
+                          echo "Succeeded to find Transition"
+                       else
+                          echo "Failed to find Transition"
+                       fi
                        echo ${dev_complete}
                        echo "################################"
                      """
