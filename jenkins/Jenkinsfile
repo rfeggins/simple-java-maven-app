@@ -69,7 +69,7 @@ pipeline {
                      echo "################################"
                        echo "Searching for jira issue"
 
-                       if [ grep -i -o ${dev_complete} ${issue_info} ]
+                       if [ grep -i -o ${dev_complete} "${issue_info}" ]
                        then
                           echo "Succeeded to find Transition"
                        else
