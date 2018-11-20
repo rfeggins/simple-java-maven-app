@@ -26,11 +26,14 @@ pipeline {
               def issue
               def error_msg
               def error_no = 355
-/*
+
+              // print environment
+
               sh """
-                gitCommitMsg=`git log --oneline ${GIT_COMMIT}`
+                env
+                
               """
-              */
+
 
                // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
