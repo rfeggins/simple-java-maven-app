@@ -4,7 +4,7 @@ pipeline {
     environment {
       Integer buildSuccessTransition = 5
       Integer buildFailTransition = 1
-      jiraSite = "Hertz-Jira"
+      jiraSite = "Hertz-Jira"  // Hertz site
       ddtl_ID =  "ddtl-5304"
       jiraComment = "No Comment"
       gitCommitMsg = "No Message"
@@ -16,20 +16,47 @@ pipeline {
             script {
 
 
+
+               // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
-                currentBuild.result = 'FAILURE'
+                 echo "NO Commit msg found within Git Commit message Error 120"
+                 echo "##########################"
+                 def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                 currentBuild.result = 'FAILURE'
+                 exit 120
+
                } else {
                  echo "Following DDTL IDs retrieved from git commit message"
                  echo ddtl_ID
                }
-          
+
                script {
 
-                 def issue = jiraGetIssue idOrKey: 'env.ddtlID'
-                 echo issue.data.toString()
+                 try {
+                   def issue = jiraGetIssue idOrKey: 'ddtl_ID'
+                 } catch (ERROR) {
+                   echo "The following Jira Issues are not found in" jiraSite ddtl_ID
+                   echo "ERROR  message Error 130"
+                   echo "##########################"
+                   def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                   currentBuild.result = 'FAILURE'
+                   exit 130
+                 }
+                
+                 // exit if
+                 if ( issue.data.toString() == "" ) {
+                   echo "The following Jira Issues are not found in" jiraSite ddtl_ID
+                   echo "ERROR  message Error 130"
+                   echo "##########################"
+                   def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                   currentBuild.result = 'FAILURE'
+                   exit 130
+                 }
+
+
 
                  try {
-                     def comment = "${BUILD_URL} FAILED - ${ERROR}"
+
                      jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
 
 
