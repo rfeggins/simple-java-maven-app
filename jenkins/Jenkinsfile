@@ -12,7 +12,7 @@ pipeline {
 
     stages {
         stage ('Validate Jira') {
-          step {
+          steps {
             echo ddtl_ID
             echo $ddtl_ID
             script {
@@ -38,15 +38,15 @@ pipeline {
                 echo "Deploy to Dev"
                 sh 'ls -l'
         }}
-}} //End Pipeline and Stages
-/*
+
         stage('Update Jira Stage'){
            steps {
              script {
 
              } // End script
-           } // End Steps
-         } // End Update Jira Stage
+           }} // End Step // End Update Jira Stage
+}}
+           /*
              echo "Update Jira "
 
             script {
