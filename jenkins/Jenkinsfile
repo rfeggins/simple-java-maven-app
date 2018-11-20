@@ -22,10 +22,7 @@ pipeline {
                  echo "Following DDTL IDs retrieved from git commit message"
                  echo ddtl_ID
                }
-               for (int i; i < ddtl_ID.size(); i++ ) {
-                    echo "Checking Jira"
-               }
-
+          
                script {
 
                  def issue = jiraGetIssue idOrKey: 'env.ddtlID'
