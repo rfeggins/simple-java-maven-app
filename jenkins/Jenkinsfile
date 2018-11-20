@@ -14,8 +14,37 @@ pipeline {
         stage ('Validate Jira') {
           steps {
             script {
-               echo "DDTL IDs is"
-               echo ddtl_ID
+
+
+               if (ddtl_ID == "") {
+                currentBuild.result = 'FAILURE'
+               } else {
+                 echo "Following DDTL IDs retrieved from git commit message"
+                 echo ddtl_ID
+               }
+               for (int i; i < ddtl_ID.size(); i++ ) {
+                    echo "Checking Jira"
+               }
+
+               script {
+
+                 def issue = jiraGetIssue idOrKey: 'env.ddtlID'
+                 echo issue.data.toString()
+
+                 try {
+                     def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                     jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
+
+
+                     def transitionInput = [ transition: [ name: $buildSuccessTransition ] ]
+                     jiraTransitionIssue idOrKey: $ddtlIDs, input: transitionInput, site: $jiraSite
+
+                } catch (error) {
+                     def comment = "${BUILD_URL} FAILED - ${ERROR}"
+                     jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
+                     currentBuild.result = 'FAILURE'
+               }
+           }
 
             }
         }} // End of Validate Jira stage and Step
@@ -48,25 +77,7 @@ pipeline {
 
              echo "Update Jira "
 
-            script {
 
-              def issue = jiraGetIssue idOrKey: 'env.ddtlID'
-              echo issue.data.toString()
-
-              try {
-                  def comment = "${BUILD_URL} FAILED - ${ERROR}"
-                  jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
-                  currentBuild.result = 'FAILURE'
-
-                  def transitionInput = [ transition: [ name: $buildSuccessTransition ] ]
-                  jiraTransitionIssue idOrKey: $ddtlIDs, input: transitionInput, site: $jiraSite
-
-             } catch (error) {
-                  def comment = "${BUILD_URL} FAILED - ${ERROR}"
-                  jiraAddComment idOrKey: $ddtlIDs, comment: comment, site: $jiraSite
-                  currentBuild.result = 'FAILURE'
-            }
-        }
     } // End Stages
 } // End Pipeline
 */
