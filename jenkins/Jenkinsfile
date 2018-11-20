@@ -13,8 +13,6 @@ pipeline {
     stages {
         stage ('Validate Jira') {
           steps {
-            echo ddtl_ID
-            echo $ddtl_ID
             script {
                echo "DDTL IDs is"
                echo ddtl_ID
