@@ -27,13 +27,6 @@ pipeline {
               def error_msg
               def error_no = 355
 
-
-              sh """
-
-                 grep -o -i "ddtl-...." <<< ${gitCommitMsg}
-
-              """
-
                // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
 
