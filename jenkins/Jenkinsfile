@@ -12,31 +12,32 @@ pipeline {
 
     stages {
         stage ('Validate Jira') {
-          echo ddtl_ID
-          echo $ddtl_ID
+          step {
+            echo ddtl_ID
+            echo $ddtl_ID
+            script {
+               echo "DDTL IDs is"
+               echo ddtl_ID
 
-          script {
-             echo "DDTL IDs is"
-             echo ddtl_ID
-
-          }
-        } // End of Validate Jira stage
+            }
+        }} // End of Validate Jira stage and Step
 
 
 
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
-        }}
+        }} //End of Build Stage
+
         stage('Test') {
             steps {
                 sh 'mvn test'
-        }}
+        }} // End of Test Stage
         stage('Deploy to Dev') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
+                echo "Deploy to Dev"
+                sh 'ls -l'
+        }}
 }} //End Pipeline and Stages
 /*
         stage('Update Jira Stage'){
