@@ -119,6 +119,8 @@ pipeline {
 
                   jiraComment = jiraComment + "Deployment Successful - Transitioning Jira Issue to  " + gitCommitMsg + "new State " + ready_to_deploy
 
+                  jiraAddComment idOrKey: ddtl_ID , site: jiraSite, comment: jiraComment
+
                     Integer pull_request_merged = 101
                     echo "##############################################################################"
                     def transitionInput = [ transition: [ id: pull_request_merged ] ]
