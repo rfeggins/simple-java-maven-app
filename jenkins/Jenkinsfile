@@ -71,6 +71,5 @@ pipeline {
                   currentBuild.result = 'FAILURE'
             }
         }
-      }
     } // End Stages
 } // End Pipeline
