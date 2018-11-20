@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-      Integer buildSuccessTransition = 5
-      Integer buildFailTransition = 1
+      Integer deployed_to_qa = 91
+      Integer ready_for_po = 6
       jiraSite = "Hertz-Jira"  // Hertz site
       ddtl_ID =  "ddtl-5304"
       jiraComment = "No Comment"
@@ -134,24 +134,18 @@ pipeline {
              script {
                def qa_transition = jiraGetIssueTransitions idOrKey: ddtl_ID, site: jiraSite
                echo qa_transition.data.toString()
-             }
-        }}
-}}
-             /*
 
                jiraCommet = "Jenkins Automation\n" + "\nBuild Number " + env.BUILD_NUMBER + "\nBuild URL " + env.BUILD_URL + "\nJOB NAME " + env.JOB_NAME + "\nJOB URL " + env.JOB_URL
-
                jiraComment = jiraComment + "Deployment Successful - Transitioning Jira Issue to  " + gitCommitMsg + "new State " + ready_to_deploy
 
-                 Integer deployed_to_qa = 101
+
                  echo "##############################################################################"
                  def transitionInput = [ transition: [ id: deployed_to_qa ] ]
                  try {
                    def trans_issue = jiraTransitionIssue idOrKey: ddtl_ID , input: transitionInput, site: jiraSite
-                   echo "transiton response " + trans_issue.data.toString()
 
                  } catch (err) {
-                    error "Exception"
+                    error "Exception Failed to Transition to Jira Issue to QA"
                     jiraAddComment idOrKey: ddtl_ID , site: jiraSite, comment: "${BUILD_URL} ERROR WHILE RELEASING ${error}"
                    currentBuild.result = 'FAILURE'
                  }
