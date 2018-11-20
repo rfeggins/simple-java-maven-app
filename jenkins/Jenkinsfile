@@ -62,19 +62,19 @@ pipeline {
                    } else {
                      echo "jiraGetIssue Returned successfully"
                      echo "searching for workflow state"
-                     echo dev_complete
+
                      def issue_info = issue.data.toString()
+
                      sh """
                        echo "Searching for jira issue"
                        echo ${dev_complete}
                        echo "################################"
-                       echo ${issue_info}
-
                      """
                    }
 
-              } catch (error ){
-                   error_msg = "[FAILURE - 130] Failed to build /n The following Jira Issues are not found in"
+              } catch ( error_msg ){
+                   error_msg = "[FAILURE - 130] Failed to build \n"
+                   echo "The following Jira Issues are not found in"
                    echo ddtl_ID
                    echo error_msg
                    echo "##########################"
