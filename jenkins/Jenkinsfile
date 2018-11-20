@@ -72,7 +72,7 @@ pipeline {
                      """
                    }
 
-              } catch ( error_msg ){
+              } catch ( error_issue ){
                    error_msg = "[FAILURE - 130] Failed to build \n"
                    echo "The following Jira Issues are not found in"
                    echo ddtl_ID
