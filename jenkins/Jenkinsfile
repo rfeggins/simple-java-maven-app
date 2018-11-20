@@ -64,16 +64,17 @@ pipeline {
                        echo ${dev_complete}
 
                      """
-
                    }
 
               } finally {
-                   echo '[FAILURE - 130] Failed to build '
-                   echo "The following Jira Issues are not found in" jiraSite ddtl_ID
-                   echo "ERROR  message Error 130"
+                   error_msg = "[FAILURE - 130] Failed to build /n The following Jira Issues are not found in"
+                   echo ddtl_ID
+                   echo error_msg
                    echo "##########################"
                    comment = "${BUILD_URL} FAILED"
                    currentBuild.result = 'FAILURE'
+                   sh "exit ${error_msg}"
+                   
               }  // End of Try block
             }  // End of script block
         }} // End of Validate Jira stage and Step
