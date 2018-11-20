@@ -136,11 +136,9 @@ pipeline {
                        error "Exception"
                        jiraAddComment idOrKey: ddtl_ID , site: jiraSite, comment: "${BUILD_URL} ERROR WHILE RELEASING ${error}"
                       currentBuild.result = 'FAILURE'
-
+                    }
                 }
         }}
-}}
-/*
         stage('Update Jira Stage'){
            steps {
              script {
@@ -154,4 +152,3 @@ pipeline {
 
     } // End Stages
 } // End Pipeline
-*/
