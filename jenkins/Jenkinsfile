@@ -8,6 +8,14 @@ pipeline {
       ddtl_ID =  "ddtl-5304"
       jiraComment = "No Comment"
       gitCommitMsg = "No Message"
+
+      //initializing a local variable
+      in_progress = "https://hertzdigital.atlassian.net/rest/api/2/status/11408"
+      dev_complete = "https://hertzdigital.atlassian.net/rest/api/2/status/11419"
+      ready_to_deploy = "https://hertzdigital.atlassian.net/rest/api/2/status/6"
+      to_do = "https://hertzdigital.atlassian.net/rest/api/2/status/11300"
+
+
     }  // End of Environment block
 
     stages {
