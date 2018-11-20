@@ -112,25 +112,13 @@ pipeline {
                   jiraCommet = "Jenkins Automation\n" + "\nBuild Number " + env.BUILD_NUMBER + "\nBuild URL " + env.BUILD_URL + "\nJOB NAME " + env.JOB_NAME + "\nJOB URL " + env.JOB_URL
 
                   jiraComment = jiraComment + "Deployment Successful - Transitioning Jira Issue to  " + gitCommitMsg + "new State " + ready_to_deploy
-                  /*
-                  try {
-                          jiraAddComment idOrKey: ddtl_ID, comment: jiraComment, site: jiraSite
-                          def transitionInput = [ transition: [ name: buildSuccessTransition ] ]
-                          jiraTransitionIssue idOrKey: ddtl_ID, input: transitionInput, site: jiraSite
 
-                     } finally {
-                          error_msg = "FAILURE ERROR 140 - ${BUILD_URL} FAILED"
-                          jiraAddComment idOrKey: ddtl_ID, comment: error_msg, site: jiraSite
-                          currentBuild.result = 'FAILURE'
-
-                    }
-                    */
                     Integer pull_request_merged = 101
                     echo "##############################################################################"
                     def transitionInput = [ transition: [ id: pull_request_merged ] ]
                     try {
                       def trans_issue = jiraTransitionIssue idOrKey: ddtl_ID , input: transitionInput, site: jiraSite
-                      echo "transiton response " trans_issue
+                      echo "transiton response " + trans_issue.data.toString()
 
                     } catch (err) {
                        error "Exception"
@@ -140,7 +128,7 @@ pipeline {
                 }
         }} // End of Stage and Step
 
-        stage('Update Jira Stage') {
+        stage('Transition to QA') {
            steps {
              script {
                echo "Update Jira Stage"
