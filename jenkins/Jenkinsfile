@@ -38,15 +38,16 @@ pipeline {
                 echo "Deploy to Dev"
                 sh 'ls -l'
         }}
-
+}}
+/*
         stage('Update Jira Stage'){
            steps {
              script {
+               echo "Update Jira Stage"
 
              } // End script
            }} // End Step // End Update Jira Stage
-}}
-           /*
+
              echo "Update Jira "
 
             script {
