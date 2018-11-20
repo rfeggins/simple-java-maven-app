@@ -25,6 +25,7 @@ pipeline {
               def comment
               def issue
               def error_msg
+              def error_no = 355
 
                // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
@@ -38,7 +39,7 @@ pipeline {
                  echo comment
 
                  currentBuild.result = 'FAILURE'
-                 sh "exit ${error_msg}"
+                 sh "exit ${error_no}"
 
                } else {
                  echo "Following DDTL IDs retrieved from git commit message"
@@ -56,7 +57,7 @@ pipeline {
                          echo error_msg
 
                          currentBuild.result = 'FAILURE'
-                         sh "exit ${error_msg}"
+                         sh "exit ${error_no}"
                    } else {
                      echo issue.data.toString()
                      sh """
@@ -73,8 +74,8 @@ pipeline {
                    echo "##########################"
                    comment = "${BUILD_URL} FAILED"
                    currentBuild.result = 'FAILURE'
-                   sh "exit ${error_msg}"
-                   
+                   sh "exit ${error_no}"
+
               }  // End of Try block
             }  // End of script block
         }} // End of Validate Jira stage and Step
