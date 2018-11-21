@@ -7,7 +7,7 @@ pipeline {
       jiraSite = "Hertz-Jira"  // Hertz site
       ddtl_ID =  "ddtl-5304"
       jiraComment = "No Comment"
-      commit = "THis is a test git message with 2 ddtl  ddtl-5404, DDTL-5309"
+      commit
 
       //initializing a local variable
       in_progress = "https://hertzdigital.atlassian.net/rest/api/2/status/11408"
