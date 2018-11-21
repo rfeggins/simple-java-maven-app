@@ -29,23 +29,14 @@ pipeline {
 
               // print environment
 
-              sh """
-              echo "HERE IS THE DEFAULT"
-              echo ${commit}
+              commit = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT}')
 
-              String mycommit
+              ddtl_ID = sh(returnStdout: true, script: 'git log --format=%s | grep ddtl* | cut -f 1 -d \' \'')
 
-              mycommit=`git log --oneline -1 ${GIT_COMMIT}`
-              echo $mycommit
+              echo "Jenkins pipeline shell output"
 
-
-              ${ddtl_ID}=`git log --format=%s | grep ddtl* | cut -f 1 -d ' ' `
-
-              """
-
-              echo "Git Comment Message"
-              echo gitCommitMsg
-              echo "ddtl_ID" + ddtl_ID
+              echo commit
+              echo ddtl_ID
 
                // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
