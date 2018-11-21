@@ -71,10 +71,11 @@ pipeline {
                 def fields = jiraGetFields idOrKey: ddtl_ID, site: jiraSite
                 echo fields.data.toString()
 
+              /*
                 echo "Executing jiraGetProjectStatuses"
                 def statuses = jiraGetProjectStatuses idOrKey: ddtl_ID, site: jiraSite
                 echo statuses.data.toString()
-
+              */
                  echo "Executing jiraGetIssue"
 
                    issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
