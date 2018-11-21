@@ -5,9 +5,9 @@ pipeline {
       Integer deployed_to_qa = 91
       Integer ready_for_po = 6
       jiraSite = "Hertz-Jira"  // Hertz site
-      ddtl_ID =  "ddtl-5304"
+      ddtl_ID =  "ddtl-1122"
       jiraComment = "No Comment"
-      commit
+      commit = ""
 
       //initializing a local variable
       in_progress = "https://hertzdigital.atlassian.net/rest/api/2/status/11408"
