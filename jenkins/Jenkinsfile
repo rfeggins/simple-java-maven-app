@@ -26,14 +26,25 @@ pipeline {
               def issue
               def error_msg
               def error_no = 355
+              def workflow_state = "name:in QA (Ready to Test)"
 
               // print environment
 
               sh """
-                env
+              mycommit=`git log --oneline -1 ${GIT_COMMIT}` # prints SHA and title line
+              echo mycomit = ${mycommit}
 
+              myrevisedcommit=`git log --format=%s | grep ddtl* | cut -f 1 -d ' ' `
+
+             echo ddtl == ${myrevisedcommit}
+
+              ${gitCommitMsg}=${mycommit}
+              ${ddtl_ID}=${myrevisedcommit}
               """
 
+              echo "Git Comment Message"
+              echo gitCommitMsg
+              echo "ddtl_ID" + ddtl_ID
 
                // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
@@ -58,7 +69,13 @@ pipeline {
               try {
                  echo "Executing jiraGetIssue"
                    issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
-                   echo issue.data.toString()
+                   def issue_response = issue.data.toString()
+
+                   sh """
+                     env
+                     grep -i ${workflow_state} ${issue_response}
+
+                   """
 
                    if ( issue.data.toString() == "" ) {
 
