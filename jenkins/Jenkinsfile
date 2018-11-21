@@ -32,9 +32,12 @@ pipeline {
               sh """
               echo "HERE IS THE DEFAULT"
               echo ${commit}
-              
-              ${commit}=`git log --oneline -1 ${GIT_COMMIT}`
-              echo comit = ${commit}
+
+              String mycommit
+
+              mycommit=`git log --oneline -1 ${GIT_COMMIT}`
+              echo $mycommit
+
 
               ${ddtl_ID}=`git log --format=%s | grep ddtl* | cut -f 1 -d ' ' `
 
