@@ -26,12 +26,14 @@ pipeline {
               def error_msg
               def error_no = 355
               def workflow_state = "name:in QA (Ready to Test)"
+              commit = ""
+              ddtl_ID = ""
 
               // print environment
 
-              commit = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT}')
+              commit = sh(returnStdout: true, script:  'git log --oneline -1 ${GIT_COMMIT}')
 
-              ddtl_ID = sh(returnStdout: true, script: 'git log --format=%s | grep -i -o ddtl-.... | cut -f 1 -d \' \'')
+              ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT}' | grep -i -o ddtl-.... | cut -f 1 -d \' \'')
 
               echo "Jenkins pipeline shell output"
 
