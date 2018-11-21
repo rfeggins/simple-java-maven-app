@@ -8,6 +8,7 @@ pipeline {
       ddtl_ID =  "ddtl-1122"
       jiraComment = "No Comment"
       commit = ""
+      tmp = ""
 
       //initializing a local variable
       in_progress = "https://hertzdigital.atlassian.net/rest/api/2/status/11408"
@@ -28,6 +29,7 @@ pipeline {
               def workflow_state = "name:in QA (Ready to Test)"
               commit = ""
               ddtl_ID = ""
+              tmp = ""
 
               // print environment
 
@@ -43,7 +45,7 @@ pipeline {
               for (int i = 0; i < ddtl_ID.size(); i++ ) {
                 echo i + " issue  " + ddtl_ID[ i ]
               }
-
+              ddtl_ID = "ddtl-5304"
                // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
 
@@ -68,6 +70,7 @@ pipeline {
                  echo "Executing jiraGetIssue"
                    issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
                    def issue_response = issue.data.toString()
+                   echo issue.data.toString()
 
                    sh """
                      env
