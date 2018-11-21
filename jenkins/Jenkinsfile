@@ -40,6 +40,10 @@ pipeline {
               echo commit
               echo ddtl_ID
 
+              for (int i = 0; i < ddtl_ID.size(); i++ ) {
+                echo i + " issue  " + ddtl_ID[ i ]
+              }
+
                // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
 
