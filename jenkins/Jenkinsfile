@@ -31,15 +31,13 @@ pipeline {
               // print environment
 
               sh """
-              mycommit=`git log --oneline -1 ${GIT_COMMIT}` # prints SHA and title line
-              echo mycomit = ${mycommit}
+              commit=`git log --oneline -1 ${GIT_COMMIT}` # prints SHA and title line
+              echo comit = ${mycommit}
 
-              myrevisedcommit=`git log --format=%s | grep ddtl* | cut -f 1 -d ' ' `
-
-             echo ddtl == ${myrevisedcommit}
+              ${ddtl_ID}=`git log --format=%s | grep ddtl* | cut -f 1 -d ' ' `
 
               ${gitCommitMsg}=${mycommit}
-              ${ddtl_ID}=${myrevisedcommit}
+
               """
 
               echo "Git Comment Message"
