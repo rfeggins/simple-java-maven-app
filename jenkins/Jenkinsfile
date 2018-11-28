@@ -32,7 +32,7 @@ pipeline {
               ddtl_ID = ""
               tmp = ""
 
-              // print environment
+              // print environment 
 
               gitCommitMsg = sh(returnStdout: true, script:  'git log --oneline -1 ${GIT_COMMIT}')
 
