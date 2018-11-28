@@ -70,6 +70,8 @@ pipeline {
               */
                  echo "Executing jiraGetIssue"
 
+                 ddtl_ID = "ddtl-5309"
+
                  issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
                  def issue_response = issue.data.toString()
 
