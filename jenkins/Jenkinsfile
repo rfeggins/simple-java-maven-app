@@ -32,7 +32,7 @@ pipeline {
               ddtl_ID = ""
               tmp = ""
 
-              // print environment 
+              // print environment
 
               gitCommitMsg = sh(returnStdout: true, script:  'git log --oneline -1 ${GIT_COMMIT}')
 
@@ -61,11 +61,11 @@ pipeline {
 
                  // retrieving jira issue
               try {
-                /*
+
                 echo "Executing jiraGetFields"
                 def fields = jiraGetFields idOrKey: ddtl_ID, site: jiraSite
                 echo fields.data.toString()
-
+              /*
                 echo "Executing jiraGetProjectStatuses"
                 def statuses = jiraGetProjectStatuses idOrKey: ddtl_ID, site: jiraSite
                 echo statuses.data.toString()
