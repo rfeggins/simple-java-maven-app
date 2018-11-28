@@ -46,11 +46,8 @@ pipeline {
                if (ddtl_ID == "") {
 
                  echo "##########################"
-                 echo error_code_1
+                 echo error_code_1 + "\n ${BUILD_URL}"
                  echo "##########################"
-
-                 comment = "${BUILD_URL} FAILED "
-                 echo comment
 
                  currentBuild.result = 'FAILURE'
                  sh "exit ${error_no}"
