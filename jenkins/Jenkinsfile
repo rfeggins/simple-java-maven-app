@@ -105,7 +105,6 @@ pipeline {
 
               } catch ( error_issue ){
                    error_msg = "[FAILURE - 130] Failed to build \n"
-                   echo "
                    echo ddtl_ID
                    echo error_msg
                    echo "##########################"
