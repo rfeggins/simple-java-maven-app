@@ -7,7 +7,7 @@ pipeline {
       jiraSite = "Hertz-Jira"  // Hertz site
       ddtl_ID =  "ddtl-1122"
       jiraComment = "No Comment"
-      commit = ""
+      gitCommitMsg = ""
       tmp = ""
 
       //initializing a local variable
@@ -28,21 +28,21 @@ pipeline {
               def error_code_2 = "Jira Process Error - DDTL Issue ID was not located in Jira "
               def error_code_3 = "Jira Process Error - DDTL Issue is in the wrong state "
               def workflow_state = "name:in QA (Ready to Test)"
-              commit = ""
+              gitCommitMsg = ""
               ddtl_ID = ""
               tmp = ""
 
               // print environment
 
-              commit = sh(returnStdout: true, script:  'git log --oneline -1 ${GIT_COMMIT}')
+              gitCommitMsg = sh(returnStdout: true, script:  'git log --oneline -1 ${GIT_COMMIT}')
 
               ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl-.... | cut -f 1 -d \' \'')
 
               echo "Jenkins pipeline shell output"
-              echo commit
+              echo gitCommitMsg
               echo ddtl_ID
 
-               // validate that ddtl number is found within Git Commit message
+               // validate that ddtl number is found within Git gitCommitMsg message
                if (ddtl_ID == "") {
 
                  echo "##########################"
@@ -75,7 +75,7 @@ pipeline {
                  issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
                  def issue_response = issue.data.toString()
 
-                 //commit = sh(returnStdout: true, script:  'grep -i -o $=git log --oneline -1 ${GIT_COMMIT}')
+                 //gitCommitMsg = sh(returnStdout: true, script:  'grep -i -o $=git log --oneline -1 ${GIT_COMMIT}')
 
 
                    if ( issue.data.toString() == "" ) {
