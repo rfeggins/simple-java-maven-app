@@ -24,8 +24,9 @@ pipeline {
           steps {
             script {
               def issue
-              def error_msg
-              def error_no = 355
+              def error_code_1 = "Jira Process Error - No DDTL Issue found in Git Commit Message "
+              def error_code_2 = "Jira Process Error - DDTL Issue ID was not located in Jira "
+              def error_code_3 = "Jira Process Error - DDTL Issue is in the wrong state "
               def workflow_state = "name:in QA (Ready to Test)"
               commit = ""
               ddtl_ID = ""
@@ -38,20 +39,14 @@ pipeline {
               ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl-.... | cut -f 1 -d \' \'')
 
               echo "Jenkins pipeline shell output"
-
               echo commit
               echo ddtl_ID
 
-              for (int i = 0; i < ddtl_ID.size(); i++ ) {
-                echo i + " issue  " + ddtl_ID[ i ]
-              }
-              ddtl_ID = "ddtl-5304"
                // validate that ddtl number is found within Git Commit message
                if (ddtl_ID == "") {
 
-                 error_msg = "NO Commit msg found within Git Commit message Error 120"
                  echo "##########################"
-                 echo error_msg
+                 echo error_code_1
                  echo "##########################"
 
                  comment = "${BUILD_URL} FAILED "
@@ -67,26 +62,22 @@ pipeline {
 
                  // retrieving jira issue
               try {
+                /*
                 echo "Executing jiraGetFields"
                 def fields = jiraGetFields idOrKey: ddtl_ID, site: jiraSite
                 echo fields.data.toString()
 
-              /*
                 echo "Executing jiraGetProjectStatuses"
                 def statuses = jiraGetProjectStatuses idOrKey: ddtl_ID, site: jiraSite
                 echo statuses.data.toString()
               */
                  echo "Executing jiraGetIssue"
 
-                   issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
-                   def issue_response = issue.data.toString()
-                   echo issue.data.toString()
+                 issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
+                 def issue_response = issue.data.toString()
 
-                   sh """
-                     env
-                     grep -i ${workflow_state} ${issue_response}
+                 //commit = sh(returnStdout: true, script:  'grep -i -o $=git log --oneline -1 ${GIT_COMMIT}')
 
-                   """
 
                    if ( issue.data.toString() == "" ) {
 
@@ -101,18 +92,20 @@ pipeline {
                      echo "searching for workflow state"
 
                      def issue_info = issue.data.toString()
+                     echo issue_info
 
                      sh """
                      echo "################################"
                        echo "Searching for jira issue"
                        echo ${dev_complete}
+
                        echo "################################"
                      """
                    }
 
               } catch ( error_issue ){
                    error_msg = "[FAILURE - 130] Failed to build \n"
-                   echo "The following Jira Issues are not found in"
+                   echo "
                    echo ddtl_ID
                    echo error_msg
                    echo "##########################"
