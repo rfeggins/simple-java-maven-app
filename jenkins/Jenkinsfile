@@ -40,7 +40,8 @@ pipeline {
 
               echo "Jenkins pipeline shell output"
               echo gitCommitMsg
-              echo ddtl_ID
+              echo "####" + ddtl_ID + "####"
+              String new_ddtl_ID = ddtl_ID
 
                // validate that ddtl number is found within Git gitCommitMsg message
                if (ddtl_ID == "") {
@@ -72,7 +73,7 @@ pipeline {
 
                  //ddtl_ID = "ddtl-5309"
 
-                 issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
+                 issue = jiraGetIssue idOrKey: new_ddtl_ID, site: jiraSite
                  def issue_response = issue.data.toString()
 
                  //gitCommitMsg = sh(returnStdout: true, script:  'grep -i -o $=git log --oneline -1 ${GIT_COMMIT}')
