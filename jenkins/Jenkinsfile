@@ -37,7 +37,7 @@ pipeline {
               gitCommitMsg = sh(returnStdout: true, script:  'git log --oneline -1 ${GIT_COMMIT}')
 
             //   ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl-.... | cut -f 1 -d \' \'')
-              ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl-.... | tr -d $1')
+              ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl-.... | tr -d \'\r\' ')
 
               echo "Jenkins pipeline shell output"
               echo gitCommitMsg
