@@ -8,7 +8,7 @@ pipeline {
       ddtl_ID =  "ddtl-1122"
       jiraComment = "No Comment"
       gitCommitMsg = ""
-      tmp = ""
+      current_state = ""
 
       //initializing a local variable
       in_progress = "https://hertzdigital.atlassian.net/rest/api/2/status/11408"
@@ -71,26 +71,23 @@ pipeline {
                 echo statuses.data.toString()
               */
                  echo "Executing jiraGetIssue"
-
-                 //ddtl_ID = "ddtl-5309"
-
                  issue = jiraGetIssue idOrKey: new_ddtl_ID, site: jiraSite
-       
+                 current_state = issue.data.toString()
 
-                   if ( issue.data.toString() == "" ) {
+                   if ( current_state == "" ) {
 
-                         error_msg = "[FAILURE - 120] jiraGetIssue api call failed sh exit ${result}"
-                         echo "##########################"
+                         echo "jiraGetIssue Failed to return a value"
                          echo error_msg
 
                          currentBuild.result = 'FAILURE'
+                       
                    } else {
                      echo "jiraGetIssue Returned successfully"
                      echo "searching for workflow state"
-
+                      
                      tmp = issue.data.toString()
-                     
-                     sh(returnStdout: true, script: 'echo ${tmp} ')
+          
+                     sh(returnStdout: true, script: 'echo ${current_state} ')
                       
 
                      sh """
