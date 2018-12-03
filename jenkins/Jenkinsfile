@@ -77,7 +77,7 @@ pipeline {
                  issue = jiraGetIssue idOrKey: new_ddtl_ID, site: jiraSite
                  def issue_response = issue.data.toString()
                   
-                  def response = sh(returnStdout: true, script: 'echo ${issue_response} | grep -i -o "status/11419" ')
+                  def response = sh(returnStdout: true, script: 'echo ${issue_response} ')
                   
                   echo response
 
