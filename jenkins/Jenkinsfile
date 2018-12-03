@@ -15,7 +15,8 @@ pipeline {
       dev_complete = "https://hertzdigital.atlassian.net/rest/api/2/status/11419"
       ready_to_deploy = "https://hertzdigital.atlassian.net/rest/api/2/status/6"
       to_do = "https://hertzdigital.atlassian.net/rest/api/2/status/11300"
-
+ 
+        
 
     }  // End of Environment block
 
