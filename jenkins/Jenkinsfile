@@ -61,11 +61,10 @@ pipeline {
 
                  // retrieving jira issue
               try {
-
+               /*
                 echo "Executing jiraGetFields"
                 def fields = jiraGetFields idOrKey: ddtl_ID, site: jiraSite
                 echo fields.data.toString()
-              /*
                 echo "Executing jiraGetProjectStatuses"
                 def statuses = jiraGetProjectStatuses idOrKey: ddtl_ID, site: jiraSite
                 echo statuses.data.toString()
@@ -77,7 +76,7 @@ pipeline {
                  issue = jiraGetIssue idOrKey: new_ddtl_ID, site: jiraSite
                  def issue_response = issue.data.toString()
                   
-                  def response = sh(returnStdout: true, script: 'echo ${issue_response} | grep -i -o 'status/11419' | tr -d "\n" ')
+                  def response = sh(returnStdout: true, script: 'echo ${issue_response} | grep -i -o "status/11419" ')
                   
                   echo response
 
