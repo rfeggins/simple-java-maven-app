@@ -53,7 +53,7 @@ pipeline {
                  echo "##########################"
 
                  currentBuild.result = 'FAILURE'
-                 sh "exit ${error_no}"
+             
 
                } else {
                  echo "Following DDTL IDs retrieved from git commit message"
@@ -84,7 +84,6 @@ pipeline {
                          echo error_msg
 
                          currentBuild.result = 'FAILURE'
-                         sh "exit ${error_no}"
                    } else {
                      echo "jiraGetIssue Returned successfully"
                      echo "searching for workflow state"
@@ -96,10 +95,9 @@ pipeline {
 
                      sh """
                      
-                     echo "################################"
+                       echo "################################"
                        echo "Searching for jira issue"
                        echo ${dev_complete}
-
                        echo "################################"
                        
                        echo ${tmp} | grep -i -o ${dev_complete}
