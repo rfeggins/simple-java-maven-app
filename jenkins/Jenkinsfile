@@ -92,13 +92,17 @@ pipeline {
                      tmp = issue.data.toString()
                      
                      sh(returnStdout: true, script: 'echo ${tmp} ')
+                      
 
                      sh """
+                     
                      echo "################################"
                        echo "Searching for jira issue"
                        echo ${dev_complete}
 
                        echo "################################"
+                       
+                       echo ${tmp} | grep -i -o ${dev_complete}
                      """
                    }
 
