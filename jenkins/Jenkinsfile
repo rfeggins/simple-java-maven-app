@@ -95,7 +95,8 @@ pipeline {
                      echo "searching for workflow state"
 
                      def issue_info = issue.data.toString()
-                     echo issue_info
+                     
+                     sh(returnStdout: true, script: 'echo ${issue_info} ')
 
                      sh """
                      echo "################################"
