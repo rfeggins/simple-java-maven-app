@@ -76,8 +76,10 @@ pipeline {
 
                  issue = jiraGetIssue idOrKey: new_ddtl_ID, site: jiraSite
                  def issue_response = issue.data.toString()
-
-                 //gitCommitMsg = sh(returnStdout: true, script:  'grep -i -o $=git log --oneline -1 ${GIT_COMMIT}')
+                  
+                  def response = sh(returnStdout: true, script: 'echo ${issue_response} | grep -i -o 'status/11419' | tr -d "\n" ')
+                  
+                  echo response
 
 
                    if ( issue.data.toString() == "" ) {
