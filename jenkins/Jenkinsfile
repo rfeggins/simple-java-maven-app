@@ -75,12 +75,7 @@ pipeline {
                  //ddtl_ID = "ddtl-5309"
 
                  issue = jiraGetIssue idOrKey: new_ddtl_ID, site: jiraSite
-                 def issue_response = issue.data.toString()
-                  
-                  def response = sh(returnStdout: true, script: 'echo ${issue_response} ')
-                  
-                  echo response
-
+       
 
                    if ( issue.data.toString() == "" ) {
 
@@ -94,9 +89,9 @@ pipeline {
                      echo "jiraGetIssue Returned successfully"
                      echo "searching for workflow state"
 
-                     def issue_info = issue.data.toString()
+                     tmp = issue.data.toString()
                      
-                     sh(returnStdout: true, script: 'echo ${issue_info} ')
+                     sh(returnStdout: true, script: 'echo ${tmp} ')
 
                      sh """
                      echo "################################"
