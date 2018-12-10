@@ -25,11 +25,13 @@ pipeline {
        stage('Demo') {
            steps {
               echo 'Hello world'
-               def gitC = ${GIT_COMMIT}
+       
                script {
-                 sayHello 'Dave'
-                   
-                   checkJiraIssue( gitC )
+                  sayHello 'Dave'
+           
+                   checkJiraIssue ([
+                       gitCommit: ${GIT_COMMIT}
+                   ])
                } // End of Script block
            } // End of Step block
        }
