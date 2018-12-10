@@ -1,4 +1,4 @@
-@Library('pipeline-library-demo')_
+@Library('jenkins-shared-lib-poc')_
 
 pipeline {
     agent any
@@ -20,14 +20,12 @@ pipeline {
 
     }  // End of Environment block
 
-
-
-    stage('Demo') {
-       echo 'Hello world'
-       sayHello 'Dave'
-    }
-
     stages {
+
+       stage('Demo') {
+          echo 'Hello world'
+          sayHello 'Dave'
+       }
         stage ('Validate Jira') {
           steps {
             script {
