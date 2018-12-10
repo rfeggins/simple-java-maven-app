@@ -22,26 +22,14 @@ pipeline {
 
     stages {
 
-       stage('Demo') {
-           steps {
-              echo 'Hello world'
-       
-               script {
-                  sayHello 'Dave'
-
-               } // End of Script block
-           } // End of Step block
-       }
         stage ('Validate Jira') {
           steps {
             script {
               
               ddtl_ID = ""
               tmp = ""
-              def myresult = checkJiraIssue ([
-                  gitCommit: 'hello Reedy'
-              ])
-              echo ddtl_ID
+              def myresult = checkJiraIssue 
+            
               echo "####" + ddtl_ID + "####"
               String new_ddtl_ID = ddtl_ID
 
@@ -49,7 +37,7 @@ pipeline {
                if (ddtl_ID == "") {
 
                  echo "##########################"
-                 echo error_code_1 + "\n ${BUILD_URL}"
+                 echo "\n ${BUILD_URL}"
                  echo "##########################"
 
                  currentBuild.result = 'FAILURE'
