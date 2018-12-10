@@ -30,7 +30,7 @@ pipeline {
                   sayHello 'Dave'
            
                    checkJiraIssue ([
-                       gitCommit: ${GIT_COMMIT}
+                       gitCommit: 'hello Reedy'
                    ])
                } // End of Script block
            } // End of Step block
