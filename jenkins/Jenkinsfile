@@ -23,8 +23,12 @@ pipeline {
     stages {
 
        stage('Demo') {
-          echo 'Hello world'
-          sayHello 'Dave'
+           steps {
+              echo 'Hello world'
+               script {
+                 sayHello 'Dave'
+               } // End of Script block
+           } // End of Step block
        }
         stage ('Validate Jira') {
           steps {
