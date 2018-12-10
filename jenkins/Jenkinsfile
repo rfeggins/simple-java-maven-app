@@ -23,9 +23,12 @@ pipeline {
 
     stages {
         stage ('check Jira') {
-            checkJenkinsEnv 
-            checkJiraIssue
-        }
+            steps {
+                script {
+                  checkJenkinsEnv 
+                  checkJiraIssue
+             }} // End of script and step
+        } // End of check Jira stage
 
         stage ('Validate Jira') {
           steps {
