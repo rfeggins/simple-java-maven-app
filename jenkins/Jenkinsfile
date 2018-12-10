@@ -28,34 +28,20 @@ pipeline {
        
                script {
                   sayHello 'Dave'
-           
-                   checkJiraIssue ([
-                       gitCommit: 'hello Reedy'
-                   ])
+
                } // End of Script block
            } // End of Step block
        }
         stage ('Validate Jira') {
           steps {
             script {
-              def issue
-              def error_code_1 = "Jira Process Error - No DDTL Issue found in Git Commit Message "
-              def error_code_2 = "Jira Process Error - DDTL Issue ID was not located in Jira "
-              def error_code_3 = "Jira Process Error - DDTL Issue is in the wrong state "
-              def workflow_state = "name:in QA (Ready to Test)"
-              gitCommitMsg = ""
+              
               ddtl_ID = ""
               tmp = ""
-
-              // print environment
-
-              gitCommitMsg = sh(returnStdout: true, script:  'git log --oneline -1 ${GIT_COMMIT}')
-
-            //   ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl-.... | cut -f 1 -d \' \'')
-              ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl-.... | tr -d "\n" ')
-
-              echo "Jenkins pipeline shell output"
-              echo gitCommitMsg
+              def myresult = checkJiraIssue ([
+                  gitCommit: 'hello Reedy'
+              ])
+              echo ddtl_ID
               echo "####" + ddtl_ID + "####"
               String new_ddtl_ID = ddtl_ID
 
