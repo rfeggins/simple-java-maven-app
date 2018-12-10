@@ -22,6 +22,10 @@ pipeline {
     }  // End of Environment block
 
     stages {
+        stage ('check Jira') {
+            checkJenkinsEnv 
+            checkJiraIssue
+        }
 
         stage ('Validate Jira') {
           steps {
