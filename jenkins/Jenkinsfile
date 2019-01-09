@@ -22,15 +22,19 @@ pipeline {
 
     stages {
       stage('Check Jira') {
+        steps {
+          script {
+            try {
+              def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
+              echo issue.data.toString()
 
-        try {
-          def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
-          echo issue.data.toString()
-
-        } catch (erro){
-          error "Script Error trying to get Comments"
-        }
-      }
+            } catch (erro) {
+              error "Script Error trying to get Comments"
+            } // END TRY BLOCK
+          } // END SCRIPT
+        } //END STEPS
+      } // END Stage
+      
         stage('Build') {
           steps {}
               echo "Build Stage - package result"
