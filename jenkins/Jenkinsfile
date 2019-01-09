@@ -27,15 +27,15 @@ pipeline {
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
+            } catch (Exception ex) {
+
               if ( issue.successful.toString() ) {  //true
                 echo "Issue ${ddtl_ID} Exists"
               } else {
                 echo "Issue ${ddtl_ID} DOESNT EXIST"
               }
 
-            } catch (Exception ex) {
               println( ex.getMessage() )
-              println( ex.getStackTrace() )
               error "Script Error trying to get Comments"
               println("Catching the exception")
             } // END TRY BLOCK
@@ -81,7 +81,11 @@ pipeline {
 
 
     } // STAGES
-
+    post { 
+            failure {
+                echo 'I will always say Hello again!'
+            }
+        }
 
 
 } // PIPELINE END
