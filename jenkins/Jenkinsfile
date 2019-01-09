@@ -28,20 +28,6 @@ pipeline {
           } // End Steps
       } //End of Build Stage
 
-      stage('Test') {
-          steps {
-              echo "Test Stage"
-          }
-      } // End of Test Stage
-
-      stage('Deploy to Dev') {
-          steps {
-            scripts {
-              Integer newState = 101
-              trans_TO_ReadyToDeploy (jiraSite, ddtl_ID, newState )
-            }
-         }
-      } // End of Stage and Step End Stages
-
+      
     } // STAGES returnStdout
 } // PIPELINE END
