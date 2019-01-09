@@ -35,6 +35,7 @@ pipeline {
 
             } catch (erro) {
               error "Script Error trying to get Comments"
+              println("Catching the exception")
             } // END TRY BLOCK
           } // END SCRIPT
         } //END STEPS
