@@ -27,7 +27,11 @@ pipeline {
               // if Build success then
           } // End Steps
       } //End of Build Stage
-
+      stage('Test') {
+          steps {
+              echo "Test Stage"
+          }
+      } // End of Test Stage
       
     } // STAGES returnStdout
 } // PIPELINE END
