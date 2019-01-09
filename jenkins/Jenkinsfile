@@ -27,7 +27,10 @@ pipeline {
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
-              } catch (hudson.AbortException ae) {
+            } catch (groovy.lang.MissingPropertyException aaa) {
+               echo "Caught GROOVY EXCEPTION"
+
+            } catch (hudson.AbortException ae) {
                 // this ambiguous condition means during a shell step, user probably aborted
                 if (ae.getMessage().contains('script returned exit code 143')) {
                         echo "HUDSON EXCEPTION 1s"
