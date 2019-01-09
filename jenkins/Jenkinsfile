@@ -28,9 +28,9 @@ pipeline {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
               if ( issue.successful.toString() ) {  //true
-                echo 'Issue Exists'
+                echo "Issue ${ddtl_ID} Exists"
               } else {
-                echo "Issue ${ddtl_ID} DOESNT EXIST'
+                echo "Issue ${ddtl_ID} DOESNT EXIST"
               }
 
             } catch (erro) {
