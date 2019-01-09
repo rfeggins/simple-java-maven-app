@@ -7,7 +7,7 @@ pipeline {
       Integer deployed_to_qa = 91
       Integer ready_for_po = 6
       jiraSite = "Hertz-Jira"  // Hertz site
-      ddtl_ID =  "Ddtl-5309"
+      ddtl_ID =  "Ddtl-5309fsf"
       jiraComment = "No Comment"
       gitCommitMsg = ""
       current_state = ""
@@ -26,9 +26,12 @@ pipeline {
           script {
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
-              echo issue.data.toString()
-              echo issue.successful.toString()
-              echo issue.getstatuscode.toString()
+
+              if ( issue.successful.toString() ) {  //true
+                echo 'Issue Exists'
+              } else {
+                echo "Issue ${ddtl_ID} DOESNT EXIST'
+              }
 
             } catch (erro) {
               error "Script Error trying to get Comments"
