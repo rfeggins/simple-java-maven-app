@@ -33,7 +33,9 @@ pipeline {
                 echo "Issue ${ddtl_ID} DOESNT EXIST"
               }
 
-            } catch (erro) {
+            } catch (Exception ex) {
+              println( ex.getMessage() )
+              println( ex.getStackTrace() )
               error "Script Error trying to get Comments"
               println("Catching the exception")
             } // END TRY BLOCK
