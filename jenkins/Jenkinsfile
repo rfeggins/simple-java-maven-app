@@ -21,8 +21,18 @@ pipeline {
     }  // End of Environment block
 
     stages {
-      stage('Build') {
-          steps {
+      stage('Check Jira') {
+
+        try {
+          def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
+          echo issue.data.toString()
+
+        } catch (erro){
+          error "Script Error trying to get Comments"
+        }
+      }
+        stage('Build') {
+          steps {}
               echo "Build Stage - package result"
               // if Build success then
           } // End Steps
@@ -44,18 +54,6 @@ pipeline {
               echo "##############################################################################"
               echo "executing shared lib call to transFrom DevComplete to ReadyForQA"
               echo "##############################################################################"
-
-             try {
-
-               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
-               echo issue.data.toString()
-
-               def comments = jiraGetComments site: jiraSite, idOrKey: ddtl_ID
-               //echo comments.data.toString()
-
-             } catch (erro){
-               error "Script Error trying to get Comments"
-             }
 
               try {
                     trans_issue = jiraTransitionIssue idOrKey: ddtl_ID , input: transitionInput, site: jiraSite
