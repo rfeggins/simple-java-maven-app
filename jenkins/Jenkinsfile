@@ -27,6 +27,13 @@ pipeline {
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
+              } catch (hudson.AbortException ae) {
+                // this ambiguous condition means during a shell step, user probably aborted
+                if (ae.getMessage().contains('script returned exit code 143')) {
+                        echo "HUDSON EXCEPTION 1s"
+                } else {
+                          echo "HUDSON EXCEPTION 2"
+                }
             } catch (Exception ex) {
 
               if ( issue.successful.toString() ) {  //true
@@ -81,7 +88,7 @@ pipeline {
 
 
     } // STAGES
-    post { 
+    post {
             failure {
                 echo 'I will always say Hello again!'
             }
