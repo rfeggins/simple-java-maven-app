@@ -55,9 +55,8 @@ pipeline {
 
               try {
                     trans_issue = jiraTransitionIssue idOrKey: ddtl_ID , input: transitionInput, site: jiraSite
-                    echo "transiton response " + trans_issue.data.toString()
-                    echo trans_issue
-
+                    echo "transiton response" + trans_issue.data.toString()
+      
               } catch (err) {
                     error "Script Error transitioning to ReadyToDeploy"
 
