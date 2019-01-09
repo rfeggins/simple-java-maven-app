@@ -3,7 +3,6 @@
 pipeline {
     agent any
 
-
     environment {
       Integer deployed_to_qa = 91
       Integer ready_for_po = 6
@@ -22,7 +21,6 @@ pipeline {
     }  // End of Environment block
 
     stages {
-
       stage('Build') {
           steps {
               sh 'mvn -v'
@@ -34,8 +32,8 @@ pipeline {
       stage('Test') {
           steps {
               echo "Test Stage"
-
-      }} // End of Test Stage
+          }
+      } // End of Test Stage
 
       stage('Deploy to Dev') {
           steps {
@@ -43,5 +41,8 @@ pipeline {
               Integer newState = 101
               trans_TO_ReadyToDeploy (jiraSite, ddtl_ID, newState )
             }
-      }} // End of Stage and Step End Stages
-} // End Pipeline
+         }
+      } // End of Stage and Step End Stages
+
+    } // STAGES returnStdout
+} // PIPELINE END
