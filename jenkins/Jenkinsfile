@@ -46,8 +46,6 @@ pipeline {
               echo "Test Stage"
           }
       } // End of Test Stage
-
-    }
 }
 /*
       stage('Deploy to Dev') {
