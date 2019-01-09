@@ -37,7 +37,7 @@ pipeline {
           steps {
             script {
               Integer newState = 101
-              trans_TO_ReadyToDeploy (jiraSite, ddtl_ID, newState )
+              trans_TO_ReadyToDeploy(jiraSite, ddtl_ID, newState )
             } // END Script Section
          } // END Step
       } // End of Stage
@@ -46,5 +46,5 @@ pipeline {
     } // STAGES
 
 
-    
+
 } // PIPELINE END
