@@ -27,6 +27,8 @@ pipeline {
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
               echo issue.data.toString()
+              echo issue.successful.toString()
+              echo issue.getstatuscode.toString()
 
             } catch (erro) {
               error "Script Error trying to get Comments"
