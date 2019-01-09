@@ -35,8 +35,8 @@ pipeline {
         } //END STEPS
       } // END Stage
 
-        stage('Build') {
-          steps {}
+      stage('Build') {
+          steps {
               echo "Build Stage - package result"
               // if Build success then
           } // End Steps
@@ -46,8 +46,7 @@ pipeline {
               echo "Test Stage"
           }
       } // End of Test Stage
-}
-/*
+
       stage('Deploy to Dev') {
           steps {
             script {
