@@ -68,8 +68,11 @@ pipeline {
                 echo issue.data.toString()
               }
             */
+            } catch (MissingPropertyException ab ){
+              echo "Caught GROOVY EXCEPTION MissingPropertyException"
+
             } catch (groovy.lang.MissingPropertyException aaa) {
-               echo "Caught GROOVY EXCEPTION"
+               echo "Caught GROOVY EXCEPTION  groovy.lang.MissingPropertyException"
 
             } catch (hudson.AbortException ae) {
                 // this ambiguous condition means during a shell step, user probably aborted
