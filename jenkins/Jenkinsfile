@@ -28,6 +28,7 @@ pipeline {
             gitCommitMsg = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT}' )
             ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl-.... | tr -d "\n" ')
 
+            echo "Commit Message:  ${gitCommitMsg}"
             echo "Jira Issues found in Git Commit Msg:  ${ddtl_ID}"
 
             // validate that ddtl number is found within Git gitCommitMsg message
