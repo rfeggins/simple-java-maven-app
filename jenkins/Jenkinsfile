@@ -51,11 +51,11 @@ pipeline {
               //issue["fields"]["status"]["name"]
 
               echo "Current Status"
-              String statusName = issue.fields.status.name
+              String myStatus = issue.fields.status
+              System.out.println(myStatus)
 
-              System.out.println(statusName)
             //  echo issue.fields.status.id.toString()
-            /*
+            /*f
               if ( issue.status_int == 200 ) {
 
                 echo "SUCCESS 200"
