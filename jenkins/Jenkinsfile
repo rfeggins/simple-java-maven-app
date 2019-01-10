@@ -52,7 +52,8 @@ pipeline {
 
               echo "Current Status"
               String statusName = issue.fields.status.name
-              echo statusName
+
+              System.out.println(statusName)
             //  echo issue.fields.status.id.toString()
             /*
               if ( issue.status_int == 200 ) {
