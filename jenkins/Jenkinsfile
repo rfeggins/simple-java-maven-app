@@ -51,8 +51,8 @@ pipeline {
               //issue["fields"]["status"]["name"]
 
               echo "Current Status"
-              String myStatus = issue.fields.status
-              System.out.println(myStatus)
+              String myStatus = issue.fields.status.name
+              //System.out.println(myStatus)
 
             //  echo issue.fields.status.id.toString()
             /*f
