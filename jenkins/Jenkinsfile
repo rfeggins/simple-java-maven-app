@@ -107,8 +107,15 @@ pipeline {
                     trans_issue = jiraTransitionIssue idOrKey: ddtl_ID , input: transitionInput, site: jiraSite
                     echo "transiton response" + trans_issue.data.toString()
 
-              } catch (err) {
-                    error "Script Error transitioning to ReadyToDeploy"
+              } catch (hudson.AbortException ae) {
+                        // this ambiguous condition means during a shell step, user probably aborted
+
+                        if (ae.getMessage().contains('Error Code: 404')) {
+                                echo "HUDSON EXCEPTION: Error Code: 404"
+                        }
+                        echo "Failed to find jira Ticket  ${ddtl_ID}"
+                        echo ae.message
+                        currentBuild.result = 'SUCCESS'
 
               } // END Catch
             } // END Script Section
