@@ -49,8 +49,10 @@ pipeline {
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
+              echo "Required Field"
               echo issue.data.required_field_name
-              echo response.data.status
+              echo "CUrrent Status"
+              echo issue.data.status
               echo issue.data.toString()
 
             } catch (groovy.lang.MissingPropertyException aaa) {
