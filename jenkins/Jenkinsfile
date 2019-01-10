@@ -6,7 +6,7 @@ pipeline {
       Integer deployed_to_qa = 91
       Integer ready_for_po = 6
       jiraSite = "Hertz-Jira"  // Hertz site
-      ddtl_ID =  "Ddtl-5309fsf"
+      ddtl_ID =  ""
       jiraComment = "No Comment"
       gitCommitMsg = ""
       current_state = ""
@@ -25,8 +25,26 @@ pipeline {
           script {
             // ##################################################
             // get ddtl from commit Message
+            gitCommitMsg = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} )
+            ddtl_ID = sh(returnStdout: true, script: 'git log --oneline -1 ${GIT_COMMIT} | grep -i -o ddtl..... | tr -d "\n" ')
 
+            echo "Jira Issues found in Git Commit Msg:  ${ddtl_ID}"
 
+            // validate that ddtl number is found within Git gitCommitMsg message
+            if (ddtl_ID == "") {
+              echo "##########################"
+              echo "Process Error - No DDTL Issue found in Git Commit Message\n for build  "
+              echo "commit message::     " + gitCommitMsg
+              echo "##########################"
+              currentBuild.result = 'FAILURE'
+
+            } else {
+              echo "Following DDTL IDs retrieved from git commit message"
+              echo ddtl_ID
+            }
+
+            // ##################################################
+            // Check Jira for Error message
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
@@ -38,11 +56,11 @@ pipeline {
 
                 if (ae.getMessage().contains('Error Code: 404')) {
                         echo "HUDSON EXCEPTION: Error Code: 404"
-                } else {
-                        echo "Caught HUDSON EXCEPTION 2"
                 }
-                echo ae.message
 
+                echo "Failed to find jira Ticket  ${ddtl_ID}"
+                echo ae.message
+                currentBuild.result = 'FAILURE'
 
             } catch (Exception ex) {
 
