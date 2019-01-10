@@ -48,10 +48,12 @@ pipeline {
             // Check Jira for Error message
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
+              //issue["fields"]["status"]["name"]
 
-              echo "Required Field"
+              echo "Current Status"
+              echo "Name " + issue.fields.status.name
+              echo "ID   " + issue.fields.status.id
 
-              
               if ( issue.status_int == 200 ) {
 
                 echo "SUCCESS 200"
