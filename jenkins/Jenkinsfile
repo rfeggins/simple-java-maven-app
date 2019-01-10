@@ -32,11 +32,14 @@ pipeline {
 
             } catch (hudson.AbortException ae) {
                 // this ambiguous condition means during a shell step, user probably aborted
-                if (ae.getMessage().contains('script returned exit code 143')) {
-                        echo "HUDSON EXCEPTION 1s"
+
+                if (ae.getMessage().contains('Error Code: 404')) {
+                        echo "HUDSON EXCEPTION: Error Code: 404"
                 } else {
-                          echo "HUDSON EXCEPTION 2"
+                        echo "Caught HUDSON EXCEPTION 2"
                 }
+
+
             } catch (Exception ex) {
 
               if ( issue.successful.toString() ) {  //true
