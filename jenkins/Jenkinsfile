@@ -1,4 +1,3 @@
-@Library('pipeline-library-demo')_
 
 pipeline {
     agent any
@@ -24,6 +23,10 @@ pipeline {
       stage('Check Jira') {
         steps {
           script {
+            // ##################################################
+            // get ddtl from commit Message
+
+
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
