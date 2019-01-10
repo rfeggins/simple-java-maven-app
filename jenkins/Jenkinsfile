@@ -50,10 +50,19 @@ pipeline {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
               echo "Required Field"
-              echo issue.data.required_field_name
-              echo "CUrrent Status"
-              echo issue.data.status
-              echo issue.data.toString()
+
+              
+              if ( issue.status_int == 200 ) {
+
+                echo "SUCCESS 200"
+
+              } else if (issue.status_int == 404) {
+
+                echo "ERROR 404"
+
+              } else {
+                echo issue.data.toString()
+              }
 
             } catch (groovy.lang.MissingPropertyException aaa) {
                echo "Caught GROOVY EXCEPTION"
