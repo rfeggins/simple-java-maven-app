@@ -41,6 +41,7 @@ pipeline {
                 } else {
                         echo "Caught HUDSON EXCEPTION 2"
                 }
+                echo ae.message
 
 
             } catch (Exception ex) {
