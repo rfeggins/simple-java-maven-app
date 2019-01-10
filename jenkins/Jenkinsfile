@@ -51,8 +51,8 @@ pipeline {
               //issue["fields"]["status"]["name"]
 
               echo "Current Status"
-              echo "Name " + issue.fields.status.name
-              echo "ID   " + issue.fields.status.id
+              echo issue.fields.status.name.toString()
+              echo issue.fields.status.id.toString()
 
               if ( issue.status_int == 200 ) {
 
