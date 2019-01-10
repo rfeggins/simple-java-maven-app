@@ -49,6 +49,10 @@ pipeline {
             try {
               def issue = jiraGetIssue idOrKey: ddtl_ID, site: jiraSite
 
+              echo issue.data.required_field_name
+              echo response.data.status
+              echo issue.data.toString()
+
             } catch (groovy.lang.MissingPropertyException aaa) {
                echo "Caught GROOVY EXCEPTION"
 
@@ -113,7 +117,7 @@ pipeline {
                         if (ae.getMessage().contains('Error Code: 404')) {
                                 echo "HUDSON EXCEPTION: Error Code: 404"
                         }
-                        echo "Failed to find jira Ticket  ${ddtl_ID}"
+                        echo "Failed to transition  ${ddtl_ID} to Ready to Deploy"
                         echo ae.message
                         currentBuild.result = 'SUCCESS'
 
